@@ -1,19 +1,11 @@
-name: Mon premier workflow
+name: Mon workflow
+on: [push, pull_request]
 
-on:
-  push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Exécuter une action
-        uses: actions/hello-world-docker-action@v1
-      - name: Add new directory
-        run: mkdir new_directory
-      - name: List files
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Listing files
         run: ls -al
