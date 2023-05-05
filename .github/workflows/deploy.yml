@@ -1,0 +1,22 @@
+name: CI/CD workflow
+on:
+  push:
+    branches: [ main ]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+    - name: Install dependencies
+      run: composer install
+    - name: Run tests
+      run: ./vendor/bin/phpunit
+    - name: Deploy to cloud platform
+      if: success()
+      env:
+        HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+      run: |
+        heroku login -i
+        heroku create my-app
+        git push heroku main
