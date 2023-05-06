@@ -17,11 +17,3 @@ jobs:
       run: composer install
     - name: Run tests
       run: ./vendor/bin/phpunit
-    - name: Deploy to cloud platform
-      if: success()
-      env:
-        HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-      run: |
-        heroku login -i
-        heroku create my-app
-        git push heroku main
