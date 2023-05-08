@@ -17,7 +17,7 @@ jobs:
       run: composer install
     - name: Run tests
       run:  |
-        symfony console doctrine:schema:create
+        php bin/console doctrine:schema:create
         ./vendor/bin/phpunit
     - name: Login to Docker Hub
       uses: docker/login-action@v2
