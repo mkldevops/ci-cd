@@ -11,11 +11,8 @@ class BookFormatterTest extends KernelTestCase
 {
     public function testFormatBookInfo()
     {
-        // Initialise le noyau et le conteneur pour accéder aux services
-        self::bootKernel();
-        $container = self::$kernel->getContainer();
         // Récupère le service BookFormatter
-        $bookFormatter = $container->get(BookFormatter::class);
+        $bookFormatter = self::getContainer()->get(BookFormatter::class);
         // Crée un nouveau livre
         $category = (new Category())->setName('Fiction');
         $book = (new Book($category))
@@ -24,6 +21,6 @@ class BookFormatterTest extends KernelTestCase
         // Formate les informations du livre
         $formattedInfo = $bookFormatter->format($book);
         // Vérifie si les informations du livre sont correctement formatées
-        static::assertEquals('Test Book by John Doe (Fiction)', $formattedInfo);
+        static::assertEquals('Fiction-Test-Book-by-John-Doe', $formattedInfo);
     }
 }

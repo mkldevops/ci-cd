@@ -3,11 +3,25 @@
 namespace App\Service;
 
 use App\Entity\Book;
+use Symfony\Component\String\Slugger\SluggerInterface;
 
-class BookFormatter
+final readonly class BookFormatter
 {
+
+    public function __construct(
+        private SluggerInterface $slugger
+    ) {       
+    }
+
     public function format(Book $book): string
     {
-        return sprintf('%s by %s (%s)', $book->getTitle(), $book->getAuthor(), $book->getCategoryName());
+        $text = sprintf(
+            '%s %s by %s',
+            $book->getCategoryName(),
+            $book->getTitle(),
+            $book->getAuthor(),
+        ); 
+
+        return $this->slugger->slug($text);
     }
 }
